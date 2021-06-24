@@ -24,7 +24,7 @@ public class PageDataHandler implements DataHandler{
 			
 	private String fileName;
 	private String sheetName = "sheet2"; // 表格名字
-	private int seg = 1; // 文件的序号（文件分片）
+	private int seg = 0; // 文件的序号（文件分片）
 	
 	private ExcelExporter exporter;
 	private volatile AtomicInteger count = new AtomicInteger(0);
@@ -98,6 +98,7 @@ public class PageDataHandler implements DataHandler{
 					// 新文件，重新创建 exporter
 					exporter = new ExcelExporter();
 					file = getFileName(true);
+					log.info("seg: " + file);
 					List<List<String>> listB = data.subList(remainSize, data.size());
 					exporter.init(file, new ArrayList<String>(columnName), sheetName);
 					// 导出
@@ -117,7 +118,10 @@ public class PageDataHandler implements DataHandler{
 	 * @return
 	 */
 	private String getFileName(boolean isNext) {
-		seg = isNext ? seg+1 : seg;
+//		seg = isNext ? seg+1 : seg;
+		if(isNext) {
+			seg++;
+		}
 		
 		int dot = fileName.lastIndexOf('.');
 		String a = fileName; // "扩展名左边的部分"

@@ -60,11 +60,12 @@ public class MdbPageReader extends BaseMdbReader {
 	
 	/** 查询一次分页数据
 	 * @param table
+	 * @override 如果文件已存在，是否覆盖
 	 */
-	public void queryTableOnePage( String table ) {
+	public void queryTableOnePage( String table , boolean override) {
 		// 清除之前查询的结果
 		this.recoder.reset();
-		this.dataHandler.resetSeg();
+//		this.dataHandler.resetSeg();
 		
 		this.queryTablePageData(table);
 		
@@ -78,10 +79,11 @@ public class MdbPageReader extends BaseMdbReader {
 	 */
 	public void queryTableAllData( String table ) {
 		List<Map<String, String>> list = null;
+		this.dataHandler.resetSeg();
+		
 		do {
 			// 清除之前查询的结果
 			this.recoder.reset();
-			this.dataHandler.resetSeg();
 			
 			list = this.queryTablePageData(table);
 //			if(list!=null && !list.isEmpty()) {
