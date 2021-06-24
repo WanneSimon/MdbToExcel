@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import cc.wanforme.mdbexcel.excel.ExcelExporter;
 import cc.wanforme.mdbexcel.reader.ResultRecoder;
 
-/** ´¦ÀíÃ¿Ò³µÄÊı¾İ
+/** å¤„ç†æ¯é¡µçš„æ•°æ®
  * @author wanne
  * @since 2021-06-23
  */
@@ -23,14 +23,14 @@ public class PageDataHandler implements DataHandler{
 	private static final Logger log = LoggerFactory.getLogger(PageDataHandler.class);
 			
 	private String fileName;
-	private String sheetName = "sheet2"; // ±í¸ñÃû×Ö
-	private int seg = 1; // ÎÄ¼şµÄĞòºÅ£¨ÎÄ¼ş·ÖÆ¬£©
+	private String sheetName = "sheet2"; // è¡¨æ ¼åå­—
+	private int seg = 1; // æ–‡ä»¶çš„åºå·ï¼ˆæ–‡ä»¶åˆ†ç‰‡ï¼‰
 	
 	private ExcelExporter exporter;
 	private volatile AtomicInteger count = new AtomicInteger(0);
 	private volatile AtomicLong total = new AtomicLong(0);
 	
-	/** Ã¿¸öÎÄ¼ş×î´óĞ´¶àÉÙÌõ*/
+	/** æ¯ä¸ªæ–‡ä»¶æœ€å¤§å†™å¤šå°‘æ¡*/
 	private Integer fileMaxSize = 10000;
 	
 	public PageDataHandler(String fileName, int fileMaxSize){
@@ -41,7 +41,7 @@ public class PageDataHandler implements DataHandler{
 	
 	@Override
 	public void handleData(ResultRecoder recoder) {
-		// ÏÈ¼òµ¥´òÓ¡³öÀ´£¬²âÊÔ³ÌĞò£¬ºóÃæÔÙ¿¼ÂÔÈçºÎ×ª³É excel
+		// å…ˆç®€å•æ‰“å°å‡ºæ¥ï¼Œæµ‹è¯•ç¨‹åºï¼Œåé¢å†è€ƒç•¥å¦‚ä½•è½¬æˆ excel
 //		this.printDatas(recoder);
 		
 		Set<List<Map<String, String>>> re = recoder.getTableResults();
@@ -54,10 +54,10 @@ public class PageDataHandler implements DataHandler{
 					continue;
 				}
 				
-				// ÁĞÃû
+				// åˆ—å
 				Set<String> columnName = page.get(0).keySet();
 				
-				// Ò»Ò³ÖĞËùÓĞµÄÖµ
+				// ä¸€é¡µä¸­æ‰€æœ‰çš„å€¼
 //				Collection<String> pageColumnValues = page.stream()
 //					.map( row -> row.values() )
 //					.reduce( (a,b) -> { 
@@ -66,41 +66,41 @@ public class PageDataHandler implements DataHandler{
 //						return t;
 //					}).get();
 
-				// ½« List<Map> ×ª»»³ÉList<List> £¬ÀïÃæµÄ list ¾ÍÊÇ Map ÖĞµÄÖµ
+				// å°† List<Map> è½¬æ¢æˆList<List> ï¼Œé‡Œé¢çš„ list å°±æ˜¯ Map ä¸­çš„å€¼
 				List<List<String>> data = page.stream()
 					.map( row -> new ArrayList<String>(row.values()) )
 					.collect(Collectors.toList());
 				
-				// ÊÇ·ñĞèÒª·ÖÆ¬£¬¼´µ±Ç°Êı¾İĞèÒªĞ´Èëµ½Á½¸öÎÄ¼şÖĞ£¬£¨µ±Ç°ÎÄ¼şÊ£ÓàÈİÄÉÊıÁ¿²»ÄÜĞ´ÍêËùÓĞÊı¾İ£©
+				// æ˜¯å¦éœ€è¦åˆ†ç‰‡ï¼Œå³å½“å‰æ•°æ®éœ€è¦å†™å…¥åˆ°ä¸¤ä¸ªæ–‡ä»¶ä¸­ï¼Œï¼ˆå½“å‰æ–‡ä»¶å‰©ä½™å®¹çº³æ•°é‡ä¸èƒ½å†™å®Œæ‰€æœ‰æ•°æ®ï¼‰
 				boolean needSegFile = count.get() + page.size() > fileMaxSize;
 				
-				// ¼ÌĞøÔÚµ±Ç°ÎÄ¼şÖĞ¶ÁĞ´
+				// ç»§ç»­åœ¨å½“å‰æ–‡ä»¶ä¸­è¯»å†™
 				if(!needSegFile) {
 					String file = getFileName(false);
-					// Ã¿¸ö exporter ¶ÔÏóÖ»ÓĞµÚÒ»´Îµ÷ÓÃÕâ¸ö·½·¨ÓĞĞ§£¬ºóĞøµ÷ÓÃ»áºöÂÔ
+					// æ¯ä¸ª exporter å¯¹è±¡åªæœ‰ç¬¬ä¸€æ¬¡è°ƒç”¨è¿™ä¸ªæ–¹æ³•æœ‰æ•ˆï¼Œåç»­è°ƒç”¨ä¼šå¿½ç•¥
 					this.exporter.init(file, new ArrayList<String>(columnName), sheetName);
-					// µ¼³ö
+					// å¯¼å‡º
 					this.exporter.eppendToExcel(data);
 					count.addAndGet(page.size());
 				} else {
-					// ĞèÒª·ÖÆ¬£¬ÏÈĞ´Íêµ±Ç°ÎÄ¼ş£¬ÔÙ´´½¨ĞÂµÄÎÄ¼ş
-					int remainSize = fileMaxSize - count.get(); // µ±Ç°ÎÄ¼ş»¹¿ÉÒÔĞ´Èë¶àÉÙ
+					// éœ€è¦åˆ†ç‰‡ï¼Œå…ˆå†™å®Œå½“å‰æ–‡ä»¶ï¼Œå†åˆ›å»ºæ–°çš„æ–‡ä»¶
+					int remainSize = fileMaxSize - count.get(); // å½“å‰æ–‡ä»¶è¿˜å¯ä»¥å†™å…¥å¤šå°‘
 					String file = getFileName(false);
 							
 					List<List<String>> listA = data.subList(0, remainSize);
-					// Ã¿¸ö exporter ¶ÔÏóÖ»ÓĞµÚÒ»´Îµ÷ÓÃÕâ¸ö·½·¨ÓĞĞ§£¬ºóĞøµ÷ÓÃ»áºöÂÔ
+					// æ¯ä¸ª exporter å¯¹è±¡åªæœ‰ç¬¬ä¸€æ¬¡è°ƒç”¨è¿™ä¸ªæ–¹æ³•æœ‰æ•ˆï¼Œåç»­è°ƒç”¨ä¼šå¿½ç•¥
 					this.exporter.init(file, new ArrayList<String>(columnName), sheetName);
-					// µ¼³ö
+					// å¯¼å‡º
 					this.exporter.eppendToExcel(listA);
 					
 					this.exporter.finish();
 					
-					// ĞÂÎÄ¼ş£¬ÖØĞÂ´´½¨ exporter
+					// æ–°æ–‡ä»¶ï¼Œé‡æ–°åˆ›å»º exporter
 					exporter = new ExcelExporter();
 					file = getFileName(true);
 					List<List<String>> listB = data.subList(remainSize, data.size());
 					exporter.init(file, new ArrayList<String>(columnName), sheetName);
-					// µ¼³ö
+					// å¯¼å‡º
 					this.exporter.eppendToExcel(listB);
 					count.set(data.size()-remainSize);
 				}
@@ -113,15 +113,15 @@ public class PageDataHandler implements DataHandler{
 	}
 	
 	/**
-	 * @param isNext ÊÇ·ñÏÂÒ»¸ö·ÖÆ¬ÎÄ¼ş
+	 * @param isNext æ˜¯å¦ä¸‹ä¸€ä¸ªåˆ†ç‰‡æ–‡ä»¶
 	 * @return
 	 */
 	private String getFileName(boolean isNext) {
 		seg = isNext ? seg+1 : seg;
 		
 		int dot = fileName.lastIndexOf('.');
-		String a = fileName; // "À©Õ¹Ãû×ó±ßµÄ²¿·Ö"
-		String b = ""; // À©Õ¹Ãû
+		String a = fileName; // "æ‰©å±•åå·¦è¾¹çš„éƒ¨åˆ†"
+		String b = ""; // æ‰©å±•å
 		
 		if(dot != -1) {
 			a = fileName.substring(0, dot);
@@ -132,9 +132,9 @@ public class PageDataHandler implements DataHandler{
 		if(isNext) {
 			finalName = a+" ("+seg+")."+b;
 		} else {
-			if( seg > 1 ) { // µ±Ç°ÒÑ¾­ÊÇÄ³¸ö·ÖÆ¬ÎÄ¼şÁË
+			if( seg > 1 ) { // å½“å‰å·²ç»æ˜¯æŸä¸ªåˆ†ç‰‡æ–‡ä»¶äº†
 				finalName = a+" ("+seg+")."+b;
-			} else { // »¹ÊÇ×î¿ªÊ¼µÄÎÄ¼ş£¬Ã»ÓĞ·ÖÆ¬
+			} else { // è¿˜æ˜¯æœ€å¼€å§‹çš„æ–‡ä»¶ï¼Œæ²¡æœ‰åˆ†ç‰‡
 				finalName = fileName;
 			}
 		}
@@ -168,9 +168,10 @@ public class PageDataHandler implements DataHandler{
 		
 	}
 
-	/** ¸Ã·½·¨Ö»ÊÇ´¥·¢¶ÁÈ¡½áÊøµÄÒ»¸ö²Ù×÷£¬×îºóÒ»´Î¶ÁÈ¡µÄÊı¾İÒÑ¾­±»´¦Àí£¬ÕâÀï²»ĞèÒªÔÙ´Î´¦Àí */
+	/** è¯¥æ–¹æ³•åªæ˜¯è§¦å‘è¯»å–ç»“æŸçš„ä¸€ä¸ªæ“ä½œï¼Œæœ€åä¸€æ¬¡è¯»å–çš„æ•°æ®å·²ç»è¢«å¤„ç†ï¼Œè¿™é‡Œä¸éœ€è¦å†æ¬¡å¤„ç† */
 	@Override
 	public void finished() {
+		log.info("total: " + total.get());
 		this.exporter.finish();
 	}
 	

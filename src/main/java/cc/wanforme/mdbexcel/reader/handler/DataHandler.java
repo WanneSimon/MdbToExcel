@@ -2,7 +2,7 @@ package cc.wanforme.mdbexcel.reader.handler;
 
 import cc.wanforme.mdbexcel.reader.ResultRecoder;
 
-/** ´¦Àí¶ÁÈ¡³öÀ´µÄÊı¾İ
+/** å¤„ç†è¯»å–å‡ºæ¥çš„æ•°æ®
  * @author wanne
  * @since 2021-06-23
  */

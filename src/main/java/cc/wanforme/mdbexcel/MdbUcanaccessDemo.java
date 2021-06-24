@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 import cc.wanforme.mdbexcel.assist.JackcessOpener;
 
-/** ucanaccess ²Ù×÷ *.mdb µÄÑùÀı
+/** ucanaccess æ“ä½œ *.mdb çš„æ ·ä¾‹
  * @author wanne
  *
  */
@@ -24,12 +24,12 @@ public class MdbUcanaccessDemo {
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 //		String filePath = "D:\\DB_20210601_IT.mdb";
 		String filePath = "D:\\d repo\\0622\\202106\\-DB_20210601_ANSI.mdb";
-		String  url = "jdbc:ucanaccess://"+filePath;   //ÎÄ¼şµØÖ·  
+		String  url = "jdbc:ucanaccess://"+filePath;   //æ–‡ä»¶åœ°å€  
 		
 		Properties prop = new Properties();    
-		prop.put("charSet", "gb2312");                //ÕâÀïÊÇ½â¾öÖĞÎÄÂÒÂë  
+		prop.put("charSet", "gb2312");                //è¿™é‡Œæ˜¯è§£å†³ä¸­æ–‡ä¹±ç   
 //		prop.put("jackcessopener", "com.cqvip.assist.JackcessOpener");
-		// ±ØĞëÒªÖ¸¶¨ĞÂµÄ JackcessOpener £¬Ä¬ÈÏµÄ»á±¨´í
+		// å¿…é¡»è¦æŒ‡å®šæ–°çš„ JackcessOpener ï¼Œé»˜è®¤çš„ä¼šæŠ¥é”™
 		prop.put("jackcessopener", JackcessOpener.class.getCanonicalName());
 //		prop.put("user", "");  
 //		prop.put("password", "");  
@@ -41,7 +41,7 @@ public class MdbUcanaccessDemo {
 		
 		Statement stm = connection.createStatement(); 
 		
-		// ²éÑ¯ËùÓĞ ±í¸ñ
+		// æŸ¥è¯¢æ‰€æœ‰ è¡¨æ ¼
 		System.out.println("query tables:");
 		DatabaseMetaData dbmd = connection.getMetaData();
 		ResultSet rsTables = dbmd.getTables(null, null, "%", null);
@@ -49,7 +49,7 @@ public class MdbUcanaccessDemo {
 			ResultSetMetaData md = rsTables.getMetaData();
 			List<String> tableNames = new ArrayList<>();
 			for( int i=0; i< md.getColumnCount(); i++) {
-				// ÏÂ±êÎª3(i+1=3)£¨µÚÈıÁĞ£©£¬ÊÇ±íÃû
+				// ä¸‹æ ‡ä¸º3(i+1=3)ï¼ˆç¬¬ä¸‰åˆ—ï¼‰ï¼Œæ˜¯è¡¨å
 				tableNames.add( rsTables.getString(i+1) );
 			}
 			System.out.println(tableNames.toString());

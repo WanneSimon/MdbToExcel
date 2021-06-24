@@ -4,15 +4,15 @@ import java.sql.SQLException;
 
 import cc.wanforme.mdbexcel.assist.BaseAssistant;
 
-/** ¶ÁÈ¡ *.mdb ÎÄ¼ş¸¸Àà
+/** è¯»å– *.mdb æ–‡ä»¶çˆ¶ç±»
  * @author wanne
  * @since 2021-06-23
  */
 public class BaseMdbReader {
 
-	// db¸¨ÖúÀà
+	// dbè¾…åŠ©ç±»
 	protected BaseAssistant assistant = null;
-	// ½á¹û¼ÇÂ¼Æ÷
+	// ç»“æœè®°å½•å™¨
 	protected ResultRecoder recoder;
 	
 	public BaseMdbReader(BaseAssistant assistant) throws Exception {
@@ -21,14 +21,14 @@ public class BaseMdbReader {
 		recoder = new ResultRecoder();
 	}
 	
-	/** ¹Ø±ÕÏà¹Ø×ÊÔ´
+	/** å…³é—­ç›¸å…³èµ„æº
 	 * @throws SQLException
 	 */
 	public void close() throws SQLException {
 		assistant.close();
 	}
 	
-	/** ²éÑ¯ËùÓĞ±íÊ±£¬Çå³şÖ®Ç°µÄ²éÑ¯½á¹û*/
+	/** æŸ¥è¯¢æ‰€æœ‰è¡¨æ—¶ï¼Œæ¸…æ¥šä¹‹å‰çš„æŸ¥è¯¢ç»“æœ*/
 	public void reset() {
 		recoder.reset();
 	}

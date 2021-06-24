@@ -7,35 +7,33 @@ import java.util.Map;
 import cc.wanforme.mdbexcel.assist.MdbQueryAssistant;
 import cc.wanforme.mdbexcel.reader.handler.PageDataHandler;
 
-/** ·ÖÒ³Ê½¶ÁÈ¡£¬µ¥¸ö¶ÔÏóÖØ¸´ÀûÓÃÇ°µ÷ÓÃ reset ½øĞĞÖØÖÃ£¬·ñÔòÒ³Âë»áÂÒ
+/** åˆ†é¡µå¼è¯»å–ï¼Œå•ä¸ªå¯¹è±¡é‡å¤åˆ©ç”¨å‰è°ƒç”¨ reset è¿›è¡Œé‡ç½®ï¼Œå¦åˆ™é¡µç ä¼šä¹±
  * @author wanne
  * @since 2021-06-23
  */
 public class MdbPageReader extends BaseMdbReader {
-	// Ò³Âë
+	// é¡µç 
 	private int page;
-	// Ã¿Ò³´óĞ¡
+	// æ¯é¡µå¤§å°
 	private int pageSize;
-	// Ã¿Ò³µÄÊı¾İ´¦ÀíÆ÷
+	// æ¯é¡µçš„æ•°æ®å¤„ç†å™¨
 	private PageDataHandler dataHandler;
 	
 	/**
-	 * @param fileAbsPath *.mdbÎÄ¼ş¾ø¶ÔÂ·¾¶
-	 * @param page ³õÊ¼Ò³Âë
-	 * @param pageSize Ã¿Ò³´óĞ¡
-	 * @param dataHandler Ã¿Ò³Êı¾İ´¦ÀíÆ÷ 
+	 * @param fileAbsPath *.mdbæ–‡ä»¶ç»å¯¹è·¯å¾„
+	 * @param page åˆå§‹é¡µç 
+	 * @param pageSize æ¯é¡µå¤§å°
+	 * @param dataHandler æ¯é¡µæ•°æ®å¤„ç†å™¨ 
 	 * @throws Exception
 	 */
-	public MdbPageReader(String fileAbsPath, int page, int pageSize,
-			PageDataHandler dataHandler) throws Exception {
+	public MdbPageReader(String fileAbsPath, int page, int pageSize) throws Exception {
 		super(new MdbQueryAssistant(fileAbsPath));
 		this.page = page;
 		this.pageSize = pageSize;
-		this.dataHandler = dataHandler;
 	}
 
-	/** ·ÖÒ³²éÑ¯µ¥¸ö±íµÄÊı¾İ£¬²éÑ¯½áÊøºó£¬Ò³Âë+1 <br>
-	 *  ¿ÉÒÔÍ¨¹ı ½á¹ûµÄ³¤¶ÈºÍpageSizeÊÇ·ñÏàµÈ£¬ÅĞ¶Ï²éÑ¯ÊÇ·ñ½áÊø
+	/** åˆ†é¡µæŸ¥è¯¢å•ä¸ªè¡¨çš„æ•°æ®ï¼ŒæŸ¥è¯¢ç»“æŸåï¼Œé¡µç +1 <br>
+	 *  å¯ä»¥é€šè¿‡ ç»“æœçš„é•¿åº¦å’ŒpageSizeæ˜¯å¦ç›¸ç­‰ï¼Œåˆ¤æ–­æŸ¥è¯¢æ˜¯å¦ç»“æŸ
 	 * @param table
 	 * @return
 	 */
@@ -50,7 +48,7 @@ public class MdbPageReader extends BaseMdbReader {
 		List<Map<String, String>> result = null;
 		try {
 			result = ((MdbQueryAssistant)assistant).executeQueryPreparedStatement(sql, param);
-			// ±¾´Î²éÑ¯½á¹û´æÈë recorder ÖĞ
+			// æœ¬æ¬¡æŸ¥è¯¢ç»“æœå­˜å…¥ recorder ä¸­
 			recoder.getTableResults().add(result);
 		} catch (Exception e) {
 			recoder.getFailQuery().put(sql+"; ["+table+"]", e);
@@ -60,11 +58,11 @@ public class MdbPageReader extends BaseMdbReader {
 		return result;
 	}
 	
-	/** ²éÑ¯Ò»´Î·ÖÒ³Êı¾İ
+	/** æŸ¥è¯¢ä¸€æ¬¡åˆ†é¡µæ•°æ®
 	 * @param table
 	 */
 	public void queryTableOnePage( String table ) {
-		// Çå³ıÖ®Ç°²éÑ¯µÄ½á¹û
+		// æ¸…é™¤ä¹‹å‰æŸ¥è¯¢çš„ç»“æœ
 		this.recoder.reset();
 		this.dataHandler.resetSeg();
 		
@@ -74,14 +72,14 @@ public class MdbPageReader extends BaseMdbReader {
 //		dataHandler.finished();
 	}
 	
-	/** ²éÑ¯µ¥¸ö±íµÄËùÓĞÊı¾İ
+	/** æŸ¥è¯¢å•ä¸ªè¡¨çš„æ‰€æœ‰æ•°æ®
 	 * @param table
 	 * @return
 	 */
 	public void queryTableAllData( String table ) {
 		List<Map<String, String>> list = null;
 		do {
-			// Çå³ıÖ®Ç°²éÑ¯µÄ½á¹û
+			// æ¸…é™¤ä¹‹å‰æŸ¥è¯¢çš„ç»“æœ
 			this.recoder.reset();
 			this.dataHandler.resetSeg();
 			
@@ -95,9 +93,9 @@ public class MdbPageReader extends BaseMdbReader {
 	}
 	
 
-	// ²»ÄÜÔÚÕâÀïÌá¹©¶ÁÈ¡ËùÓĞ±íµÄ·½·¨£¬
-//	/** ²éÑ¯ËùÓĞ±íµÄÊı¾İ
-// 	 * @param exceptTables ²»ĞèÒªµÄ±íÃû
+	// ä¸èƒ½åœ¨è¿™é‡Œæä¾›è¯»å–æ‰€æœ‰è¡¨çš„æ–¹æ³•ï¼Œ
+//	/** æŸ¥è¯¢æ‰€æœ‰è¡¨çš„æ•°æ®
+// 	 * @param exceptTables ä¸éœ€è¦çš„è¡¨å
 //	 * @throws SQLException
 //	 */
 //	public void queryAllTablesData(String... exceptTables) throws SQLException {
@@ -116,18 +114,14 @@ public class MdbPageReader extends BaseMdbReader {
 //	}
 	
 	/**
-	 * Çå³ı²éÑ¯½á¹û£¬ÖØÖÃÒ³Âëµ½1
+	 * æ¸…é™¤æŸ¥è¯¢ç»“æœï¼Œé‡ç½®é¡µç åˆ°1ï¼Œ(åªèƒ½åœ¨ dataHandler è®¾ç½®åè°ƒç”¨)
 	 */
 	@Override
 	public void reset() {
 		this.reset(1, pageSize);
 	}
 	
-	public void resetPage(int page) {
-		this.page = page;
-	}
-	
-	/** Çå³ı²éÑ¯½á¹û£¬ÖØÖÃ·ÖÒ³ÅäÖÃ
+	/** æ¸…é™¤æŸ¥è¯¢ç»“æœï¼Œé‡ç½®åˆ†é¡µé…ç½®(åªèƒ½åœ¨ dataHandler è®¾ç½®åè°ƒç”¨)
 	 * @param page
 	 * @param pageSize
 	 */
@@ -136,6 +130,10 @@ public class MdbPageReader extends BaseMdbReader {
 		this.page = page;
 		this.pageSize = pageSize;
 		this.dataHandler.resetSeg();
+	}
+	
+	public void resetPage(int page) {
+		this.page = page;
 	}
 
 	public PageDataHandler getDataHandler() {

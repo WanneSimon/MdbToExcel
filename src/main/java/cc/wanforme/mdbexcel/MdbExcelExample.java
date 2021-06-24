@@ -32,28 +32,31 @@ public class MdbExcelExample {
 		
 		PageDataHandler dataHandler = new PageDataHandler(outFile, fileMaxSize);
 		
-		MdbPageReader pageReader = new MdbPageReader(mdbPath, page, pageSize, dataHandler);
-		// Ö»µ¥±í²éÑ¯Ò»Ò³£¨²éÑ¯½áÊøºó£¬Ò³Âë¼ÓÒ»£¬ÔÙ´Îµ÷ÓÃ´Ë·½·¨»á²éÑ¯ÏÂÒ»Ò³µÄÊı¾İ£¬Ò³Âë´Ó1¿ªÊ¼£©
+		MdbPageReader pageReader = new MdbPageReader(mdbPath, page, pageSize);
+		// æŸ¥è¯¢ä¹‹å‰å¿…é¡»è®¾ç½®æ•°æ®å¤„ç†å™¨ï¼Œä½†å¯ä»¥åœ¨æŸ¥è¯¢æ‰€æœ‰è¡¨å
+		// List<String> tableNames = pageReader.getAssistant().queryAllTables();
+		pageReader.setDataHandler(dataHandler);
+		// åªå•è¡¨æŸ¥è¯¢ä¸€é¡µï¼ˆæŸ¥è¯¢ç»“æŸåï¼Œé¡µç åŠ ä¸€ï¼Œå†æ¬¡è°ƒç”¨æ­¤æ–¹æ³•ä¼šæŸ¥è¯¢ä¸‹ä¸€é¡µçš„æ•°æ®ï¼Œé¡µç ä»1å¼€å§‹ï¼‰
 		// pageReader.queryTableOnePage(tableName);
-		// ÔÙ´Îµ÷ÓÃ²éÑ¯ÏÂÒ»Ò³Êı¾İ
+		// å†æ¬¡è°ƒç”¨æŸ¥è¯¢ä¸‹ä¸€é¡µæ•°æ®
 		// pageReader.queryTableOnePage(tableName);
-		// ¿ÉÒÔÍ¨¹ı resetPage£¬ ÖØÖÃÒ³Âë
+		// å¯ä»¥é€šè¿‡ resetPageï¼Œ é‡ç½®é¡µç 
 		// pageReader.resetPage(1);
-		// ²éÑ¯µ¥±íËùÓĞÊı¾İ
+		// æŸ¥è¯¢å•è¡¨æ‰€æœ‰æ•°æ®
 		pageReader.queryTableAllData(tableName);
-		// Í¨ÖªÊı¾İ´¦ÀíÆ÷½áÊø£¨Í¨Öªºó£¬Ğ´Èë²Å»á½áÊø£©
+		// é€šçŸ¥æ•°æ®å¤„ç†å™¨ç»“æŸï¼ˆé€šçŸ¥åï¼Œå†™å…¥æ‰ä¼šç»“æŸï¼‰
 		dataHandler.finished();
 		
 		
-		// Ã¿¸ö PageDataHandler Ö»ÄÜ´¦ÀíÒ»ÕÅ±í£¬Èç¹ûÏë´¦Àí¶àÕÅ±í£¬ÏÈ reset£¬ÔÙÉèÖÃĞÂµÄ PageDataHandler
+		// æ¯ä¸ª PageDataHandler åªèƒ½å¤„ç†ä¸€å¼ è¡¨ï¼Œå¦‚æœæƒ³å¤„ç†å¤šå¼ è¡¨ï¼Œå…ˆ resetï¼Œå†è®¾ç½®æ–°çš„ PageDataHandler
 //		List<String> tableNames = pageReader.getAssistant().queryAllTables();
-//		pageReader.reset();
 //		pageReader.setDataHandler(new PageDataHandler(outFile, fileMaxSize));
+//		pageReader.reset(); // åœ¨è®¾ç½® dataHandler ä¹‹åè°ƒç”¨
 //		pageReader.queryTableOnePage(tableName);
 //		dataHandler.finished();
 		
 		
-		// ¹Ø±ÕÓĞ¹ØÁ¬½Ó
+		// å…³é—­æœ‰å…³è¿æ¥
 		pageReader.close(); 
 		
 		log.info("\nfinished!");

@@ -6,18 +6,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/** Ò»´Î²éÑ¯½á¹û
+/** ä¸€æ¬¡æŸ¥è¯¢ç»“æœ
  * @author wanne
  * @since 2021-06-23
  */
 public class ResultRecoder {
 	
-	/** ²éÑ¯Ê§°ÜµÄ¼ÇÂ¼*/
+	/** æŸ¥è¯¢å¤±è´¥çš„è®°å½•*/
 	private Map<String, Exception> failQuery;
 	
-	/** Ã¿Ò»´Î²éÑ¯µÄ½á¹û Map<String, String>ÖĞµÄ¼üÊÇÁĞÃû£¬ÖµÊÇÖµ <br>
-	 * MdbReaderÖĞÒ»¸ö±íµÄ½á¹û¶ÔÓ¦Ò»¸ösetÖĞµÄÔªËØ
-	 * MdbPageReaderÖĞÒ»´Î·ÖÒ³²éÑ¯µÄ½á¹û¶ÔÓ¦Ò»¸ösetÖĞµÄÔªËØ
+	/** æ¯ä¸€æ¬¡æŸ¥è¯¢çš„ç»“æœ Map<String, String>ä¸­çš„é”®æ˜¯åˆ—åï¼Œå€¼æ˜¯å€¼ <br>
+	 * MdbReaderä¸­ä¸€ä¸ªè¡¨çš„ç»“æœå¯¹åº”ä¸€ä¸ªsetä¸­çš„å…ƒç´ 
+	 * MdbPageReaderä¸­ä¸€æ¬¡åˆ†é¡µæŸ¥è¯¢çš„ç»“æœå¯¹åº”ä¸€ä¸ªsetä¸­çš„å…ƒç´ 
 	 */
 	private Set<List<Map<String, String>>> tableResults ;
 

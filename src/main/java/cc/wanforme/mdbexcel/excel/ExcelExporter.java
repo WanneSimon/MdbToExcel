@@ -9,7 +9,7 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.write.metadata.WriteSheet;
 
-/** excel µ½´¦¹¤¾ßÀà
+/** excel åˆ°å¤„å·¥å…·ç±»
  * @author wanne
  * @since 2021-06-23
  */
@@ -25,16 +25,20 @@ public class ExcelExporter {
 	
 	public ExcelExporter() {}
 	
-	/** ³õÊ¼»¯¡£Ö»ĞèÒªµ÷ÓÃÒ»´Î£¬¶à´Îµ÷ÓÃÎŞĞ§
-	 * @param exportPath µ¼³öÎÄ¼şµÄÂ·¾¶
-	 * @param head Ê×ĞĞÒ»ĞĞ×÷ÎªÍ·
-	 * @param sheetName sheetÃû
+	/** åˆå§‹åŒ–ã€‚åªéœ€è¦è°ƒç”¨ä¸€æ¬¡ï¼Œå¤šæ¬¡è°ƒç”¨æ— æ•ˆ
+	 * @param exportPath å¯¼å‡ºæ–‡ä»¶çš„è·¯å¾„
+	 * @param head é¦–è¡Œä¸€è¡Œä½œä¸ºå¤´
+	 * @param sheetName sheetå
 	 */
 	public void init(String exportPath, List<String> head, String sheetName){
 		if(!isInitial) {
 			this.file = new File(exportPath);
 			this.head = head;
 			this.sheetName = sheetName;
+			
+			if(!file.getParentFile().exists()) {
+				file.getParentFile().mkdirs();
+			}
 			
 			// @see https://www.yuque.com/easyexcel/doc/write
 			excelWriter = EasyExcel.write(file)
@@ -46,20 +50,20 @@ public class ExcelExporter {
 		}
 	}
 	
-	/** ÏòExcel ÖĞ×·¼ÓÄÚÈİ*/
+	/** å‘Excel ä¸­è¿½åŠ å†…å®¹*/
 	public void eppendToExcel(List<List<String>> data) {
 		excelWriter.write(data, writeSheet);
 	}
 	
-	/** Ğ´Èë½áÊøÒªµ÷ÓÃ finish*/
+	/** å†™å…¥ç»“æŸè¦è°ƒç”¨ finish*/
 	public void finish() {
-		// Ç§Íò±ğÍü¼Çfinish »á°ïÃ¦¹Ø±ÕÁ÷
+		// åƒä¸‡åˆ«å¿˜è®°finish ä¼šå¸®å¿™å…³é—­æµ
         if (excelWriter != null) {
             excelWriter.finish();
         }
 	}
 	
-	/** °ÑÎÒÃÇµÄ±íÍ·×ª»»³É EasyExcel ¿ÉÒÔÈÏÊ¶µÄ±íÍ·
+	/** æŠŠæˆ‘ä»¬çš„è¡¨å¤´è½¬æ¢æˆ EasyExcel å¯ä»¥è®¤è¯†çš„è¡¨å¤´
 	 * @param heads
 	 * @return
 	 */

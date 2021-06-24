@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 
 import cc.wanforme.mdbexcel.assist.MdbQueryAssistant;
 
-/** ¶ÁÈ¡ *.mdb ÎÄ¼ş£¬¶ÁÈ¡Ä³¸ö±íµÄÈ«²¿Êı¾İ£¬»òËùÓĞ±íµÄÊı¾İ£¨ÄÚ´æÕ¼ÓÃ½Ï´ó£©<br>
- * ËùÓĞ·½·¨·µ»ØµÄÊı¾İĞèÒªÊÖ¶¯´¦Àí<br> ÇëÊ¹ÓÃ MdbPageReader ´úÌæ
+/** è¯»å– *.mdb æ–‡ä»¶ï¼Œè¯»å–æŸä¸ªè¡¨çš„å…¨éƒ¨æ•°æ®ï¼Œæˆ–æ‰€æœ‰è¡¨çš„æ•°æ®ï¼ˆå†…å­˜å ç”¨è¾ƒå¤§ï¼‰<br>
+ * æ‰€æœ‰æ–¹æ³•è¿”å›çš„æ•°æ®éœ€è¦æ‰‹åŠ¨å¤„ç†<br> è¯·ä½¿ç”¨ MdbPageReader ä»£æ›¿
  * @see cc.wanforme.mdbexcel.reader.MdbPageReader
  * @author wanne
  * @since 2021-06-23
@@ -21,7 +21,7 @@ public class MdbReader extends BaseMdbReader{
 		super(new MdbQueryAssistant(fileAbsPath));
 	}
 
-	/** ¶ÁÈ¡ËùÓĞ±íµÄÊı¾İ£¬ÊÊºÏÊı¾İÁ¿²»´óÊ±¶ÁÈ¡¡££¨Õ¼ÄÚ´æ£©
+	/** è¯»å–æ‰€æœ‰è¡¨çš„æ•°æ®ï¼Œé€‚åˆæ•°æ®é‡ä¸å¤§æ—¶è¯»å–ã€‚ï¼ˆå å†…å­˜ï¼‰
 	 * @param absPath
 	 * @throws Exception
 	 */
@@ -29,16 +29,16 @@ public class MdbReader extends BaseMdbReader{
 		return this.queryAllTablesData(this::queryTableAllData);
 	}
 	
-	/** ¶ÁÈ¡ËùÓĞ±íµÄÊı¾İ£¬ÊÊºÏÊı¾İÁ¿²»´óÊ±¶ÁÈ¡¡££¨Õ¼ÄÚ´æ£©
+	/** è¯»å–æ‰€æœ‰è¡¨çš„æ•°æ®ï¼Œé€‚åˆæ•°æ®é‡ä¸å¤§æ—¶è¯»å–ã€‚ï¼ˆå å†…å­˜ï¼‰
 	 * @param absPath
 	 * @throws Exception
 	 */
 	public ResultRecoder queryAllTablesData(
 			Function<? super String, ? extends List<Map<String, String>>> mapper) throws Exception {
-		// 1. »ñÈ¡ËùÓĞ±íÃû
+		// 1. è·å–æ‰€æœ‰è¡¨å
 		List<String> tables = assistant.queryAllTables();
 		
-		// 2. ±éÀúÃ¿ÕÅ±í
+		// 2. éå†æ¯å¼ è¡¨
 //		ResultRecoder rr = new ResultRecoder();
 		recoder.reset();
 		if(tables != null) {
@@ -51,7 +51,7 @@ public class MdbReader extends BaseMdbReader{
 	
 	
 
-	/** ²éÑ¯µ¥¸ö±íµÄËùÓĞÊı¾İ
+	/** æŸ¥è¯¢å•ä¸ªè¡¨çš„æ‰€æœ‰æ•°æ®
 	 * @param table
 	 * @return
 	 */
@@ -70,13 +70,13 @@ public class MdbReader extends BaseMdbReader{
 	}
 	
 	
-	// ÑùÀı
+	// æ ·ä¾‹
 //	public ResultRecoder queryAllTablesData(String absPath) throws Exception {
 //		
-//		// 1. »ñÈ¡ËùÓĞ±íÃû
+//		// 1. è·å–æ‰€æœ‰è¡¨å
 //		List<String> tables = assistant.queryAllTables();
 //		
-//		// 2. ±éÀúÃ¿ÕÅ±í
+//		// 2. éå†æ¯å¼ è¡¨
 //		String sql = "select * from ?";
 ////		Map<String, Exception> failQuery = new HashMap<>();
 //		ResultRecoder rr = new ResultRecoder();

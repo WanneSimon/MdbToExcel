@@ -12,16 +12,16 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/** *.mdb ÎÄ¼şÊ¹ÓÃ ucanaccess ²Ù×÷µÄ¸¸Àà
+/** *.mdb æ–‡ä»¶ä½¿ç”¨ ucanaccess æ“ä½œçš„çˆ¶ç±»
  * @author wanne
  * @since 2021-06-23
  */
 public abstract class BaseAssistant {
 	private static final Logger log = LoggerFactory.getLogger(BaseAssistant.class);
 
-	// Çı¶¯ÊÇ·ñÒÑ¼ÓÔØ
+	// é©±åŠ¨æ˜¯å¦å·²åŠ è½½
 	private static volatile boolean DRIVER_LOADED = false;
-	// Á´½Ó
+	// é“¾æ¥
 	protected Connection connection;
 
 	/**
@@ -34,8 +34,8 @@ public abstract class BaseAssistant {
 	}
 
 	/**
-	 * @param file  ¾ø¶ÔÂ·¾¶
-	 * @param props Á´½ÓÊôĞÔ£¬ Ä¬ÈÏÅäÖÃ£º{@link #defaultConfig()}
+	 * @param file  ç»å¯¹è·¯å¾„
+	 * @param props é“¾æ¥å±æ€§ï¼Œ é»˜è®¤é…ç½®ï¼š{@link #defaultConfig()}
 	 * @throws Exception
 	 */
 	public BaseAssistant(String file, Properties props) throws Exception {
@@ -47,19 +47,19 @@ public abstract class BaseAssistant {
 	}
 
 	/**
-	 * ÅäÖÃĞÅÏ¢
+	 * é…ç½®ä¿¡æ¯
 	 * 
 	 * @return
 	 */
 	public static Properties defaultConfig() {
 		Properties prop = new Properties();
-		prop.put("charSet", "gb2312"); // ÕâÀïÊÇ½â¾öÖĞÎÄÂÒÂë
+		prop.put("charSet", "gb2312"); // è¿™é‡Œæ˜¯è§£å†³ä¸­æ–‡ä¹±ç 
 //			prop.put("jackcessopener", "com.cqvip.assist.JackcessOpener");
 		prop.put("jackcessopener", JackcessOpener.class.getCanonicalName());
 		return prop;
 	}
 
-	/** ¼ÓÔØÇı¶¯ */
+	/** åŠ è½½é©±åŠ¨ */
 	public static void loadDriver() throws ClassNotFoundException {
 		synchronized (MdbQueryAssistant.class) {
 			if (!DRIVER_LOADED) {
@@ -70,7 +70,7 @@ public abstract class BaseAssistant {
 	}
 
 	/**
-	 * ²éÑ¯ËùÓĞ±íÃû
+	 * æŸ¥è¯¢æ‰€æœ‰è¡¨å
 	 * 
 	 * @throws SQLException
 	 */
@@ -79,7 +79,7 @@ public abstract class BaseAssistant {
 		ResultSet rsTables = dbmd.getTables(null, null, "%", null);
 		List<String> tableNames = new ArrayList<>();
 		while (rsTables.next()) {
-			tableNames.add(rsTables.getString(3)); // µÚÈıÁĞÊÇ±íÃû
+			tableNames.add(rsTables.getString(3)); // ç¬¬ä¸‰åˆ—æ˜¯è¡¨å
 		}
 
 		rsTables.close();
@@ -87,7 +87,7 @@ public abstract class BaseAssistant {
 	}
 
 	
-	/** ¹Ø±Õ×ÊÔ´£¬Êı¾İ¿âÁ¬½ÓµÈ*/
+	/** å…³é—­èµ„æºï¼Œæ•°æ®åº“è¿æ¥ç­‰*/
 	public  void close() throws SQLException{
 		connection.close();
 	}

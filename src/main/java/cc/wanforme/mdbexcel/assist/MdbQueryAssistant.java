@@ -16,16 +16,16 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/** *.mdb ÎÄ¼şµÄÊı¾İ¿â²éÑ¯²Ù×÷·â×°-
+/** *.mdb æ–‡ä»¶çš„æ•°æ®åº“æŸ¥è¯¢æ“ä½œå°è£…-
  * @author wanne
  * @since 2021-06-23
  */
 public class MdbQueryAssistant extends BaseAssistant {
 	private static final Logger log = LoggerFactory.getLogger(MdbQueryAssistant.class);
 	
-	// ¾²Ì¬sql
+	// é™æ€sql
 	private Statement stm;
-	// ¶¯Ì¬sql
+	// åŠ¨æ€sql
 	private HashMap<String, PreparedStatement> pses;
 	
 	public MdbQueryAssistant(String file) throws Exception {
@@ -34,7 +34,7 @@ public class MdbQueryAssistant extends BaseAssistant {
 		this.pses = new HashMap<>();
 	}
 	
-	/** Ö´ĞĞ¾²Ì¬sql
+	/** æ‰§è¡Œé™æ€sql
 	 * @param sql
 	 * @return
 	 * @throws SQLException
@@ -48,15 +48,15 @@ public class MdbQueryAssistant extends BaseAssistant {
 		return list;
 	}
 	
-	/** ×¢£ºucanaccess ²»ÄÜÊ¹ÓÃ ? ×÷ÎªÕ¼ÓÃ·û£¬Ô¤±àÒëÓÅ»¯µÄÄÜÁ¦Ê¹ÓÃ²»ÁË¡£·½·¨ÄÚ²¿½« ? Í¨¹ıÕıÔò±í´ïÊ½Ìæ»»£¬×Ö·û´®Ã»ÓĞ×Ô¶¯¼Óµ¥ÒıºÅ
+	/** æ³¨ï¼šucanaccess ä¸èƒ½ä½¿ç”¨ ? ä½œä¸ºå ç”¨ç¬¦ï¼Œé¢„ç¼–è¯‘ä¼˜åŒ–çš„èƒ½åŠ›ä½¿ç”¨ä¸äº†ã€‚æ–¹æ³•å†…éƒ¨å°† ? é€šè¿‡æ­£åˆ™è¡¨è¾¾å¼æ›¿æ¢ï¼Œå­—ç¬¦ä¸²æ²¡æœ‰è‡ªåŠ¨åŠ å•å¼•å·
 	 * @param sql
-	 * @param param sqlµÄ²ÎÊı£¬¼üÊÇ PreparedStatement ÖĞÉèÖÃ²ÎÊıµÄÏÂ±ê£¬´Ó1¿ªÊ¼
+	 * @param param sqlçš„å‚æ•°ï¼Œé”®æ˜¯ PreparedStatement ä¸­è®¾ç½®å‚æ•°çš„ä¸‹æ ‡ï¼Œä»1å¼€å§‹
 	 * @return
 	 * @throws SQLException
 	 */
 	public List<Map<String, String>> executeQueryPreparedStatement(String sql, Map<Integer, ? extends Object> param) 
 			throws SQLException {
-		// ucanaccess ²»ÄÜÊ¹ÓÃ ? ×÷ÎªÕ¼Î»·û
+		// ucanaccess ä¸èƒ½ä½¿ç”¨ ? ä½œä¸ºå ä½ç¬¦
 		if(param!=null) {
 			Set<Integer> keys = param.keySet();
 			for (Integer key : keys) {
@@ -73,7 +73,7 @@ public class MdbQueryAssistant extends BaseAssistant {
 //		System.out.println("sql: " + sql);
 		log.debug("query: " + sql);
 		PreparedStatement ps = this.getPreparedStatement(sql);
-		// ucanaccess ²»ÄÜÊ¹ÓÃ ? ×÷ÎªÕ¼Î»·û
+		// ucanaccess ä¸èƒ½ä½¿ç”¨ ? ä½œä¸ºå ä½ç¬¦
 //		if(param!=null) {
 //			Set<Integer> keys = param.keySet();
 //			for (Integer key : keys) {
@@ -88,7 +88,7 @@ public class MdbQueryAssistant extends BaseAssistant {
 		return list;
 	}
 	
-	/** ²éÑ¯½á¹ûÃ¿Ò»ĞĞ×ª»»³ÉHashMap´æ´¢£¬Ã¿ĞĞ¼üÊÇÁĞÃû
+	/** æŸ¥è¯¢ç»“æœæ¯ä¸€è¡Œè½¬æ¢æˆHashMapå­˜å‚¨ï¼Œæ¯è¡Œé”®æ˜¯åˆ—å
 	 * @param rs
 	 * @return
 	 * @throws SQLException
@@ -109,7 +109,7 @@ public class MdbQueryAssistant extends BaseAssistant {
 		return list;
 	}
 	
-	/** »ñÈ¡ PreparedStatement
+	/** è·å– PreparedStatement
 	 * @param sql
 	 * @return
 	 * @throws SQLException
@@ -124,11 +124,11 @@ public class MdbQueryAssistant extends BaseAssistant {
 		return ps;
 	}
 	
-	/** ¹Ø±ÕÁ´½Ó£¬Èç¹û·¢ÉúÒì³££¬½¨ÒéÔÙµ÷ÓÃÒ»´Î
+	/** å…³é—­é“¾æ¥ï¼Œå¦‚æœå‘ç”Ÿå¼‚å¸¸ï¼Œå»ºè®®å†è°ƒç”¨ä¸€æ¬¡
 	 * @throws SQLException
 	 */
 	public void close() throws SQLException {
-		// ÓÅÏÈ¹Ø±Õ×Ô¼ºµÄÁ¬½Ó£¬ÔÙ¹Ø±Õ¸¸ÀàµÄ
+		// ä¼˜å…ˆå…³é—­è‡ªå·±çš„è¿æ¥ï¼Œå†å…³é—­çˆ¶ç±»çš„
 		if(stm != null && !stm.isClosed()) {
 			stm.close();
 		}
