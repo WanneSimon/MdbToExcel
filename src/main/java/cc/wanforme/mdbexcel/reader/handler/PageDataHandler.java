@@ -134,10 +134,12 @@ public class PageDataHandler implements DataHandler{
 		
 		String finalName = null;
 		if(isNext) {
-			finalName = a+" ("+seg+")."+b;
+//			finalName = a+"("+seg+")."+b;
+			finalName = a+"-"+seg+"."+b;
 		} else {
 			if( seg > 1 ) { // 当前已经是某个分片文件了
-				finalName = a+" ("+seg+")."+b;
+//				finalName = a+"("+seg+")."+b;
+				finalName = a+"-"+seg+"."+b;
 			} else { // 还是最开始的文件，没有分片
 				finalName = fileName;
 			}
