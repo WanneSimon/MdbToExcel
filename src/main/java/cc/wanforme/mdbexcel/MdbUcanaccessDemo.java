@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 import cc.wanforme.mdbexcel.assist.JackcessOpener;
 
-/** ucanaccess 操作 *.mdb 的样例
+/** ucanaccess驱动 操作 *.mdb 的样例
  * @author wanne
  *
  */
