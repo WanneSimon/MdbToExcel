@@ -1,4 +1,4 @@
-package cc.wanforme.mdbexcel;
+package cc.wanforme.mdbexcel.example;
 
 import java.util.List;
 
