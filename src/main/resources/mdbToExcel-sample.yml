@@ -1,5 +1,5 @@
 # mdb 源文件
-mdbFile: test/file/test.mdb
+mdbFolder: test/file
 # 输出文件夹
 out: test/file/out
 # 输出 Excel 类型 .xls 或 .xlsx

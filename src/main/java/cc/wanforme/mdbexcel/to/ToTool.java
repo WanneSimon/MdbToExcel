@@ -56,42 +56,63 @@ public class ToTool {
 	 * @throws Exception
 	 */
 	public static void convertMultiTable(SimConfig config) throws Exception {
-		String mdbFile =  config.getMdbFile();
+		String mdbFolder =  config.getMdbFolder();
 		String outDir = config.getOut();
 		
-		// 第1页开始读取
-		int startPage = 1;
-		// 每次读取1000条数据
-		int readPageSize = 1000;
-		// 每个文件的 sheet 最大存储数量，xls 最大为 65535
-		int maxSheetRow = config.getMaxSheetRow(); 
-		
-		if(maxSheetRow > 65535) {
-			maxSheetRow = 60000;
+		File folder = new File(mdbFolder);
+		if(!folder.exists()) {
+			LOG.info("Source folder is not existed! " + folder.getAbsolutePath());
+			return;
 		}
 		
-		File f = new File(mdbFile);
-		MdbPageReader reader = new MdbPageReader(mdbFile, startPage, readPageSize);
-//		FileOutputStream logfos = new FileOutputStream(new File(f.getParent(), "batch.log"), true); 
-		
-		// 读取所有表名
-		List<String> tables = reader.getAssistant().queryAllTables();
-		for (String table : tables) {
-			LOG.info("loading table '"+table+"'");
-//			String outFileName = mdbFile + "-" + table + ".xls";
-			String outFileName = outDir + "/" + f.getName() + "-" + table + config.getExcelType();
-			
-			PageDataHandler dataHandler = new PageDataHandler(outFileName, maxSheetRow);
-			reader.setDataHandler(dataHandler);
-			reader.reset();
-			
-			reader.queryTableAllData(table);
-			dataHandler.finished();
-			
-			LOG.info("'"+table+"' >> " + outFileName);
+		File[] fs = folder.listFiles();
+		if(fs == null || fs.length==0) {
+			return;
 		}
 		
-		reader.close(); 
+		for (File f : fs) {
+			String mdbFile = f.getPath();
+			if(!mdbFile.endsWith(".mdb")) {
+				continue;
+			}
+				
+			LOG.info("loading file '"+mdbFile+"'");
+			
+			// 第1页开始读取
+			int startPage = 1;
+			// 每次读取1000条数据
+			int readPageSize = 1000;
+			// 每个文件的 sheet 最大存储数量，xls 最大为 65535
+			int maxSheetRow = config.getMaxSheetRow(); 
+			
+			if(maxSheetRow > 65535) {
+				maxSheetRow = 60000;
+			}
+			
+//			File f = new File(mdbFile);
+			MdbPageReader reader = new MdbPageReader(mdbFile, startPage, readPageSize);
+//			FileOutputStream logfos = new FileOutputStream(new File(f.getParent(), "batch.log"), true); 
+			
+			// 读取所有表名
+			List<String> tables = reader.getAssistant().queryAllTables();
+			for (String table : tables) {
+				LOG.info("loading table '"+table+"'");
+//				String outFileName = mdbFile + "-" + table + ".xls";
+				String outFileName = outDir + "/" + f.getName() + "-" + table + config.getExcelType();
+				
+				PageDataHandler dataHandler = new PageDataHandler(outFileName, maxSheetRow);
+				reader.setDataHandler(dataHandler);
+				reader.reset();
+				
+				reader.queryTableAllData(table);
+				dataHandler.finished();
+				
+				LOG.info("'"+table+"' >> " + outFileName);
+			}
+			
+			reader.close(); 	
+		}
+		
 	}
 	
 	

@@ -6,7 +6,7 @@ package cc.wanforme.mdbexcel.to;
  */
 public class SimConfig {
 	// 源文件
-	private String mdbFile;
+	private String mdbFolder;
 	// 输出文件夹
 	private String out;
 	// 输出的 excel 类型
@@ -18,20 +18,20 @@ public class SimConfig {
 	
 	public SimConfig() {}
 	
-	public SimConfig(String mdbFile, String out, String excelType, Integer maxSheetRow, String[] ignoreTables) {
+	public SimConfig(String mdbFolder, String out, String excelType, Integer maxSheetRow, String[] ignoreTables) {
 		super();
-		this.mdbFile = mdbFile;
+		this.mdbFolder = mdbFolder;
 		this.out = out;
 		this.excelType = excelType;
 		this.maxSheetRow = maxSheetRow;
 		this.ignoreTables = ignoreTables;
 	}
 
-	public String getMdbFile() {
-		return mdbFile;
+	public String getMdbFolder() {
+		return mdbFolder;
 	}
-	public void setMdbFile(String mdbFile) {
-		this.mdbFile = mdbFile;
+	public void setMdbFolder(String mdbFolder) {
+		this.mdbFolder = mdbFolder;
 	}
 	public String getOut() {
 		return out;
