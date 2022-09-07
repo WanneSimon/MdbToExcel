@@ -1,0 +1,11 @@
+# mdb 源文件
+mdbFile: file/test.mdb
+# 输出文件夹
+out: file/out
+# 输出 Excel 类型 .xls 或 .xlsx
+excelType: .xls
+# 单 sheet 最大数量 max:65535
+maxSheetRow: 60000
+# 忽略的表名
+ignoreTables: 
+

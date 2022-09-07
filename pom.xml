@@ -2,6 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.3.12.RELEASE</version>
+		<!-- <relativePath/> --><!-- lookup parent from repository -->
+	</parent>
+	
     <groupId>cc.wanforme</groupId>
     <artifactId>MdbToExcel</artifactId>
     <version>1.0.0</version>
@@ -9,16 +16,25 @@
     <description>*.mdb file convert to excel </description>
 
     <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+    	<maven.compiler.target>1.8</maven.compiler.target>
         <java.version>1.8</java.version>
         <ucanaccess.version>5.0.1</ucanaccess.version>
         <jackcess-encrypt.version>3.0.0</jackcess-encrypt.version>
 		<easyexcel.version>2.2.10</easyexcel.version>
-		<log4j.version>2.14.1</log4j.version>
-		<slf4j.version>1.7.30</slf4j.version>
-		<log4j-slf4j-impl.version>2.13.3</log4j-slf4j-impl.version>
     </properties>
 
     <dependencies>
+	    <dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter</artifactId>
+		</dependency>
+
+		<dependency>
+		    <groupId>org.yaml</groupId>
+		    <artifactId>snakeyaml</artifactId>
+		</dependency>
+
    	   <!--AccessDB 数据库  驱动-->
        <dependency>
 	      <groupId>net.sf.ucanaccess</groupId>
@@ -43,25 +59,35 @@
 		<dependency>
 	        <groupId>org.apache.logging.log4j</groupId>  
 	        <artifactId>log4j-api</artifactId>  
-	        <version>${log4j.version}</version>  
 	    </dependency>  
 	    <dependency>  
 	        <groupId>org.apache.logging.log4j</groupId>  
 	        <artifactId>log4j-core</artifactId>  
-	        <version>${log4j.version}</version>  
 	    </dependency>
 		<dependency>
 		    <groupId>org.slf4j</groupId>
 		    <artifactId>slf4j-api</artifactId>
-		    <version>${slf4j.version}</version>
 		</dependency>
 		<dependency>
 		    <groupId>org.apache.logging.log4j</groupId>
 		    <artifactId>log4j-slf4j-impl</artifactId>
-		    <version>${log4j-slf4j-impl.version}</version>
 		</dependency>
 		<!-- 日志框架结束 -->
 
     </dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<!-- Main Class. 指定主方法 -->
+					<mainClass>cc.wanforme.mdbexcel.MdbToExcel</mainClass>
+					<executable>true</executable>
+				</configuration>
+            </plugin>
+		</plugins>
+	</build>
 
 </project>
