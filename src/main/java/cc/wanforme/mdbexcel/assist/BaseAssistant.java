@@ -43,7 +43,12 @@ public abstract class BaseAssistant {
 		loadDriver();
 
 		log.info("connecting...");
-		this.connection = DriverManager.getConnection("jdbc:ucanaccess://" + file, props);
+		try {
+			this.connection = DriverManager.getConnection("jdbc:ucanaccess://" + file, props);
+		} catch (Exception e) {
+			throw new RuntimeException("Can't open database, does it contain errors? "
+					+ "Is there a table named 'MSysCompactError' in databse?", e);
+		}
 	}
 
 	/**
